@@ -130,9 +130,9 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 
 
 
-void adventurerAction(int drawntreasure, int currentPlayer, int cardDrawn, struct gameState* state, int* temphand, int z);
+void adventurerAction(int drawntreasure, int currentPlayer, struct gameState* state, int* temphand, int z);
 void smithyAction(int currentPlayer, struct gameState* state, int handPos);
-void remodelAction(int choice1, int choice2, int handPos,int currentPlayer, struct gameState *state);
+int remodelAction(int choice1, int choice2, int handPos,int currentPlayer, struct gameState *state);
 void salvagerAction(int choice1, int handPos,int currentPlayer, struct gameState *state);
 void seaHagAction(int currentPlayer, struct gameState *state);
 

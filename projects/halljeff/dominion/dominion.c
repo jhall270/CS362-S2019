@@ -740,8 +740,9 @@ int getCost(int cardNumber)
 }
 
 //
-void adventurerAction(int drawntreasure, int currentPlayer, int cardDrawn, struct gameState *state, int *temphand, int z)
+void adventurerAction(int drawntreasure, int currentPlayer, struct gameState *state, int *temphand, int z)
 {
+  int cardDrawn;
   while (drawntreasure < 2)
   {
     if (state->deckCount[currentPlayer] <= 1)
@@ -779,7 +780,7 @@ void smithyAction(int currentPlayer, struct gameState *state, int handPos)
   discardCard(handPos, currentPlayer, state, 0);
 }
 
-void remodelAction(int choice1, int choice2, int handPos,int currentPlayer, struct gameState *state)
+int remodelAction(int choice1, int choice2, int handPos,int currentPlayer, struct gameState *state)
 {
   int i,j;
   j = state->hand[currentPlayer][choice1]; //store card we will trash
@@ -803,6 +804,7 @@ void remodelAction(int choice1, int choice2, int handPos,int currentPlayer, stru
       break;
     }
   }
+  return 0;
 }
 
 void salvagerAction(int choice1, int handPos,int currentPlayer, struct gameState *state){
@@ -859,7 +861,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch (card)
   {
   case adventurer:
-    adventurerAction(drawntreasure, currentPlayer, cardDrawn, state, temphand, z);
+    adventurerAction(drawntreasure, currentPlayer, state, temphand, z);
     return 0;
 
   case council_room:
@@ -987,8 +989,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case remodel:
-    remodelAction( choice1, choice2, handPos, currentPlayer, state);
-    return 0;
+    return remodelAction( choice1, choice2, handPos, currentPlayer, state);
 
   case smithy:
     smithyAction(currentPlayer, state, handPos);
