@@ -40,6 +40,9 @@ clean:
 
 
 unittestresults: unittest1.c dominion.h dominion.c rngs.o
-	gcc -o unittest1 dominion.c unittest1.c $(CFLAGS)
+	gcc -o unittest1 dominion.c unittest1.c rngs.o $(CFLAGS)
+	echo "unittests1.c" > tests.out
 	./unittest1 >> tests.out
-	gcov bst.c >> tests.out
+	gcc -o unittest2 dominion.c unittest2.c rngs.o $(CFLAGS)
+	echo "unittests2.c" >> tests.out
+	./unittest2 >> tests.out

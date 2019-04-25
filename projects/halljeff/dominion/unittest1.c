@@ -12,7 +12,7 @@ void assertTrue(int expected, int actual){
     else{
         printf("FAIL ");
     }
-    printf("Expected:&d Actual:&d\n",expected, actual);
+    printf("Expected:%d Actual:%d\n",expected, actual);
 }
 
 
