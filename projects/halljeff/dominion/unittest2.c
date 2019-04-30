@@ -20,7 +20,6 @@ void assertTrue(int expected, int actual){
 
 void testFullDeckCount(){
     struct gameState s;
-    int i;
 
     //player 0, 0 cards
     s.deckCount[0]=0;
