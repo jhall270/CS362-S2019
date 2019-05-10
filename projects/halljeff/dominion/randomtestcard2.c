@@ -1,4 +1,4 @@
-//random tester for adventurer
+//random tester for smithy
 
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -26,17 +26,19 @@ int randInt(int l, int r){
 }
 
 
-void randTestAdventurer(){
+void randTestSmithy(){
     struct gameState s, o;
     int i, j, numCards, player, returnval, n;
     int k[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     
+    //random number of players
     n=randInt(2,4);
 
+    //random initialization of game
     initializeGame(n, k, 324564, &s);
     s.numPlayers=n;
 
-    //each player, build deck and hand
+    //reset each player cards, build deck and hand
     for(i=0; i<s.numPlayers; i++){
         //hand
         numCards = randInt(2,8);
@@ -56,42 +58,48 @@ void randTestAdventurer(){
         s.playedCardCount=0;
     }
 
-    
+    //make sure has card in hand to play
     s.whoseTurn=0;
     if(s.handCount[0]==0){
         s.handCount[0]++;
     }
-    s.hand[0][0]=adventurer;
+    s.hand[0][0]=smithy;
 
 
     //make test oracle, copy s to o
     memcpy(&o,&s,sizeof(s));
     
-    //add adventurer changes to test oracle
+
+    //TEST ORACLE 
+    //add smithy changes to test oracle
+    //move 3 cards from deck to hand
     player = o.whoseTurn;
-    int treasuresFound=0;
-    
-    while(o.deckCount[player]>0 && treasuresFound < 2){
-        if(o.deck[player][o.deckCount[player]] == gold || o.deck[player][o.deckCount[player]] == silver || o.deck[player][o.deckCount[player]] == copper){
-            o.handCount[player]++;
-            treasuresFound++;
-        }
-        else{
-            o.discardCount[player]++;
-        }
-        o.deckCount[player]--;
+
+    //draw 3 cards
+    if(o.deckCount[player] >= 3){
+        o.handCount[player] += 3;
+        o.deckCount[player] -= 3;
+    }
+    else{
+        o.handCount[player] += o.deckCount[player];
+        o.deckCount[player] = 0;
     }
 
+    //discard smithy from hand
+    o.handCount[player]--;
+    o.discardCount[player]++;
 
-    //play adventurer card with struct s
-    returnval = cardEffect(adventurer, 0, 0, 0, &s, 0, 0);
+
+    //play smithy card with struct s
+    returnval = cardEffect(smithy, 0, 0, 0, &s, 0, 0);
 
     assertTrue(returnval, 0);
 
     //compare player cards
     for(i=0; i<s.numPlayers; i++){
         assertTrue(o.handCount[i],s.handCount[i]);  
-        assertTrue(o.deckCount[i],s.deckCount[i]);      
+        assertTrue(o.deckCount[i],s.deckCount[i]);
+        assertTrue(o.discardCount[i],s.discardCount[i]);       
     }    
 
 }
@@ -102,7 +110,7 @@ int main(){
     srand (time (NULL));
     for(count=0; count < 1000; count++){
         printf("Test run %d\n", count);
-        randTestAdventurer();
+        randTestSmithy();
     }
     return 0;
 }
