@@ -33,19 +33,20 @@ void randTestAdventurer(){
     
     n=randInt(2,4);
 
+    //initialize the game state, number of players random [2,4]
     initializeGame(n, k, 324564, &s);
     s.numPlayers=n;
 
     //each player, build deck and hand
     for(i=0; i<s.numPlayers; i++){
-        //hand
+        //hand generation
         numCards = randInt(2,8);
         s.handCount[i]=numCards;
         for(j=0; j<numCards; j++){
             s.hand[i][j]=randInt(curse, treasure_map);
         }
 
-        //deck
+        //deck generation
         numCards = randInt(5,25);
         s.deckCount[i]=numCards;
         for(j=0; j<numCards; j++){

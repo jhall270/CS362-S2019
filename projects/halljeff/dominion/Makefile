@@ -89,4 +89,25 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c dominion.h domi
 	cp dominion.c.gcov dominion.c_BRANCH.gcov
 
 
+randomtestresults: dominion.h dominion.o rngs.o
+	gcc -o randomtestcard1 randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	echo "randomtestcard1.c" > randomtestresults.out
+	./randomtestcard1 >> randomtestresults.out
+	gcov dominion.c >> randomtestresults.out
 
+	gcc -o randomtestcard2 randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	echo "randomtestcard2.c" > randomtestresults.out
+	./randomtestcard2 >> randomtestresults.out
+	gcov dominion.c >> randomtestresults.out
+
+	gcc -o randomtestcard3 randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+	echo "randomtestcard3.c" > randomtestresults.out
+	./randomtestcard3 >> randomtestresults.out
+	gcov dominion.c >> randomtestresults.out
+
+	cp dominion.c.gcov dominion.c_STATEMENT.gcov
+
+	echo "Additional Coverage information" >> randomtestresults.out
+	gcov -b -c dominion.c >> randomtestresults.out
+	echo "Coverage data saved as dominion.c_STATEMENT.gcov dominion.c_BRANCH.gcov" >> randomtestresults.out
+	cp dominion.c.gcov dominion.c_BRANCH.gcov

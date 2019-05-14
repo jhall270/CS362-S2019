@@ -78,8 +78,7 @@ void randTestSalvager(){
     
 
     //TEST ORACLE 
-    //add smithy changes to test oracle
-    //move 3 cards from deck to hand
+    //add salvager changes to test oracle
     player = o.whoseTurn;
 
     //optional trash card
